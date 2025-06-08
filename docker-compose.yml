@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  synology-download-mcp:
+    build: .
+    image: synology-download-mcp:latest
+    container_name: synology-download-mcp
+    restart: unless-stopped
+    environment:
+      - SYNOLOGY_HOST=${SYNOLOGY_HOST}
+      - SYNOLOGY_PORT=${SYNOLOGY_PORT}
+      - SYNOLOGY_USERNAME=${SYNOLOGY_USERNAME}
+      - SYNOLOGY_PASSWORD=${SYNOLOGY_PASSWORD}
+      - SYNOLOGY_HTTPS=${SYNOLOGY_HTTPS:-false}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+    stdin_open: true
+    tty: true
+    networks:
+      - mcp-network
+
+networks:
+  mcp-network:
+    driver: bridge
